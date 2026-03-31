@@ -1,0 +1,13 @@
+using DeviceManagement.model;
+
+namespace DeviceManagement.service
+{
+    public interface IDeviceService
+    {
+        Task<IEnumerable<Device>> GetAllDevicesAsync();
+        Task<Device> GetDeviceByIdAsync(int id);
+        Task<Device> AddDeviceAsync(Device device);
+        Task<bool> UpdateDeviceAsync(Device device);
+        Task<bool> DeleteDeviceAsync(int id);
+    }    
+}

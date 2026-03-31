@@ -1,12 +1,20 @@
 using DeviceManagement.Config;
 using DeviceManagement.model;
+using DeviceManagement.service;
 using Microsoft.EntityFrameworkCore;
+using DeviceManagement.controller;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DeviceManagementDb>(opt =>
+builder.Services.AddDbContext<SystemDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddScoped<IDeviceService, DeviceService>();
+
+
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(config =>
@@ -15,7 +23,6 @@ builder.Services.AddOpenApiDocument(config =>
     config.Title = "DeviceManagement v1";
     config.Version = "v1";
 });
-
 
 var app = builder.Build();
 
@@ -31,14 +38,6 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.MapPost("/devices", async (DeviceManagementDb db, Device device) =>
-{
-    db.Devices.Add(device);
-    await db.SaveChangesAsync();
-    return Results.Created($"/devices/{device.Id}", device);
-});
-
-
-app.MapGet("/", () => "Hello World!");
+app.MapControllers();
 
 app.Run();

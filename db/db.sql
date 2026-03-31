@@ -12,6 +12,7 @@ BEGIN
     CREATE TABLE devices (
         id INT IDENTITY(1,1) PRIMARY KEY,
         name NVARCHAR(255) NOT NULL UNIQUE,
+	manufacturer NVARCHAR(255) NOT NULL,
         type NVARCHAR(255) NOT NULL,
         operating_system NVARCHAR(255) NOT NULL,
         os_version NVARCHAR(255) NOT NULL,
