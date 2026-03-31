@@ -9,6 +9,10 @@ namespace DeviceManagement.model
         public int Id { get; set; }
         [Column("name")]
         public  string Name { get; set; }
+
+        [Column("manufacturer")]
+        public  string Manufacturer { get; set; }
+
         public string Type { get; set; }
         [Column("operating_system")]
         public string OperatingSystem { get; set; }

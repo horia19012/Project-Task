@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeviceManagement.Config
 {
-    public class DeviceManagementDb : DbContext
+    public class SystemDbContext : DbContext
     {
-        public DeviceManagementDb(DbContextOptions<DeviceManagementDb> options) : base(options)
+        public SystemDbContext(DbContextOptions<SystemDbContext> options) : base(options)
         {
         }
     public DbSet <Device> Devices { get; set; }
