@@ -1,0 +1,138 @@
+<div class="create-container">
+  <div class="form-card">
+    <h2>Create New Device</h2>
+    
+    <form [formGroup]="deviceForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Device Name *</label>
+        <input 
+          type="text" 
+          id="name" 
+          formControlName="name" 
+          placeholder="e.g., MacBook Pro"
+          required
+        />
+        <small *ngIf="deviceForm.get('name')?.invalid && submitted" class="error">
+          Name is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="manufacturer">Manufacturer *</label>
+        <input 
+          type="text" 
+          id="manufacturer" 
+          formControlName="manufacturer" 
+          placeholder="e.g., Apple"
+          required
+        />
+        <small *ngIf="deviceForm.get('manufacturer')?.invalid && submitted" class="error">
+          Manufacturer is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="type">Device Type *</label>
+        <select id="type" formControlName="type" required>
+          <option value="">Select type</option>
+          <option value="Laptop">Laptop</option>
+          <option value="Desktop">Desktop</option>
+          <option value="Tablet">Tablet</option>
+          <option value="Mobile">Mobile</option>
+        </select>
+        <small *ngIf="deviceForm.get('type')?.invalid && submitted" class="error">
+          Device type is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="operatingSystem">Operating System *</label>
+        <input 
+          type="text" 
+          id="operatingSystem" 
+          formControlName="operatingSystem" 
+          placeholder="e.g., macOS"
+          required
+        />
+        <small *ngIf="deviceForm.get('operatingSystem')?.invalid && submitted" class="error">
+          Operating system is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="osVersion">OS Version *</label>
+        <input 
+          type="text" 
+          id="osVersion" 
+          formControlName="osVersion" 
+          placeholder="e.g., 14.1"
+          required
+        />
+        <small *ngIf="deviceForm.get('osVersion')?.invalid && submitted" class="error">
+          OS version is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="processor">Processor *</label>
+        <input 
+          type="text" 
+          id="processor" 
+          formControlName="processor" 
+          placeholder="e.g., Apple M2 Pro"
+          required
+        />
+        <small *ngIf="deviceForm.get('processor')?.invalid && submitted" class="error">
+          Processor is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="ram">RAM *</label>
+        <input 
+          type="text" 
+          id="ram" 
+          formControlName="ram" 
+          placeholder="e.g., 16GB"
+          required
+        />
+        <small *ngIf="deviceForm.get('ram')?.invalid && submitted" class="error">
+          RAM is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea 
+          id="description" 
+          formControlName="description" 
+          placeholder="Enter device description"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="userId">Assign to User</label>
+        <input 
+          type="number" 
+          id="userId" 
+          formControlName="userId" 
+          placeholder="User ID (optional)"
+        />
+      </div>
+
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn-submit"
+          [disabled]="loading || (submitted && deviceForm.invalid)"
+        >
+          {{ loading ? 'Creating...' : 'Create Device' }}
+        </button>
+        <button type="button" class="btn-cancel" (click)="onCancel()" [disabled]="loading">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

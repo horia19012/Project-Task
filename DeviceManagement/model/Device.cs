@@ -13,6 +13,7 @@ namespace DeviceManagement.model
         [Column("manufacturer")]
         public  string ?Manufacturer { get; set; }
 
+        [Column("type")]
         public string ?Type { get; set; }
         [Column("operating_system")]
         public string ?OperatingSystem { get; set; }
@@ -24,6 +25,8 @@ namespace DeviceManagement.model
         public string ?Ram { get; set; }
         [Column("description")] 
         public string ?Description { get; set; }
+        [Column("userId")]
+        public int? UserId { get; set; }
 
     }
 }

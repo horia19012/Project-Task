@@ -33,3 +33,14 @@ BEGIN
     );
 END
 GO
+
+IF COL_LENGTH('devices', 'userId') IS NULL
+BEGIN
+    ALTER TABLE devices
+    ADD userId INT NULL;
+
+    ALTER TABLE devices
+    ADD CONSTRAINT FK_devices_users
+    FOREIGN KEY (userId) REFERENCES users(id);
+END
+GO
