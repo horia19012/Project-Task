@@ -1,8 +1,7 @@
 using DeviceManagement.Config;
-using DeviceManagement.model;
 using DeviceManagement.service;
 using Microsoft.EntityFrameworkCore;
-using DeviceManagement.controller;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +11,7 @@ builder.Services.AddDbContext<SystemDbContext>(opt =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddScoped<IDeviceService, DeviceService>();
-
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllers();
 
