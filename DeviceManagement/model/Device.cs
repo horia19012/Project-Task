@@ -8,22 +8,22 @@ namespace DeviceManagement.model
         [Column("id")]
         public int Id { get; set; }
         [Column("name")]
-        public  string Name { get; set; }
+        public  string ?Name { get; set; }
 
         [Column("manufacturer")]
-        public  string Manufacturer { get; set; }
+        public  string ?Manufacturer { get; set; }
 
-        public string Type { get; set; }
+        public string ?Type { get; set; }
         [Column("operating_system")]
-        public string OperatingSystem { get; set; }
+        public string ?OperatingSystem { get; set; }
         [Column("os_version")]
-        public string OsVersion { get; set; }
+        public string ?OsVersion { get; set; }
         [Column("processor")]
-        public string Processor { get; set; }
+        public string ?Processor { get; set; }
         [Column("ram")]
-        public string Ram { get; set; }
+        public string ?Ram { get; set; }
         [Column("description")] 
-        public string Description { get; set; }
+        public string ?Description { get; set; }
 
     }
 }
