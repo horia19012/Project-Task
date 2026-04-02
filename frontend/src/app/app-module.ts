@@ -8,6 +8,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DeviceCreateComponent } from './components/device-create/device-create.component';
 import { DeviceListComponent } from './components/device-list/device-list.component';
 import { DeviceDetailsComponent } from './components/device-details/device-details.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { DeviceDetailsComponent } from './components/device-details/device-detai
     DeviceCreateComponent,
     DeviceListComponent,
     DeviceDetailsComponent,
+    LoginComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [provideBrowserGlobalErrorListeners()],

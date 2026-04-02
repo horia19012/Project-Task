@@ -1,0 +1,61 @@
+<div class="login-register-container">
+  <!-- SWITCH BUTTONS -->
+  <div class="switch-buttons">
+    <button type="button" [class.active]="isLogin" (click)="toggleForm(true)">Login</button>
+    <button type="button" [class.active]="!isLogin" (click)="toggleForm(false)">Register</button>
+  </div>
+
+  <div *ngIf="isLogin" class="login-container">
+    <h2>Login</h2>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="login-form">
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" formControlName="email">
+      </div>
+      <div class="form-group">
+        <label>Password:</label>
+        <input type="password" formControlName="password">
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <div *ngIf="!isLogin" class="login-container">
+  <h2>Register</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="login-form">
+    
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" formControlName="email" required>
+    </div>
+
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" formControlName="name" required>
+    </div>
+
+    <div class="form-group">
+      <label>Location:</label>
+      <input type="text" formControlName="location" required>
+    </div>
+
+    <div class="form-group">
+      <label>Password:</label>
+      <input type="password" formControlName="password" required>
+    </div>
+
+    <div class="form-group">
+      <label>Confirm Password:</label>
+      <input type="password" formControlName="confirmPassword" required>
+    </div>
+
+    <div *ngIf="submitted && registerForm.errors?.['passwordMismatch']" style="color:red;">
+      Passwords do not match
+    </div>
+    <div *ngIf="submitted && registerForm.errors?.['emailInvalid']" style="color:red;">
+      Please enter a valid email address
+    </div>
+    <button type="submit">Register</button>
+  </form>
+</div>
+</div>

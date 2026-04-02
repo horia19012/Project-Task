@@ -3,6 +3,7 @@ using DeviceManagement.Config;
 using DeviceManagement.model;
 using DeviceManagement.service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DeviceManagement.controller
 {

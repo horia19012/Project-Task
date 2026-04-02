@@ -16,5 +16,10 @@ namespace DeviceManagement.model
         public Role ?Role{get; set;} 
         [Column("location")]
         public String ?Location {get; set;}
+        [Column("email")]
+        public String ?Email {get; set;}
+        [Column("password_hash")]
+        public String ?PasswordHash {get; set;}
+
     }
 }
