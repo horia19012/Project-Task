@@ -1,0 +1,107 @@
+.login-register-container {
+	max-width: 430px;
+	margin: 7rem auto 2rem;
+	background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+	padding: 1.5rem;
+}
+
+.switch-buttons {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem;
+	background: #f3f4f6;
+	border-radius: 10px;
+	padding: 0.35rem;
+	margin-bottom: 1.25rem;
+}
+
+.switch-buttons button {
+	border: none;
+	background: transparent;
+	color: #4b5563;
+	font-weight: 600;
+	border-radius: 8px;
+	padding: 0.6rem 0.8rem;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.switch-buttons button.active {
+	background: #111827;
+	color: #ffffff;
+}
+
+.login-container h2 {
+	margin: 0 0 1rem;
+	color: #111827;
+	font-size: 1.4rem;
+}
+
+.login-form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+.form-group label {
+	color: #374151;
+	font-size: 0.9rem;
+	font-weight: 600;
+}
+
+.form-group input {
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	padding: 0.65rem 0.75rem;
+	font-size: 0.95rem;
+	outline: none;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+	border-color: #111827;
+	box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.12);
+}
+
+.form-group input.input-invalid {
+	border-color: #dc2626;
+	box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.primary-btn {
+	border: none;
+	border-radius: 8px;
+	background: #ff9500;
+	color: #ffffff;
+	padding: 0.7rem 1rem;
+	font-size: 0.95rem;
+	font-weight: 700;
+	cursor: pointer;
+	margin-top: 0.45rem;
+	transition: background 0.2s ease;
+}
+
+.primary-btn:hover {
+	background: #e68400;
+}
+
+.form-error {
+	color: #dc2626;
+	font-size: 0.85rem;
+	margin-top: -0.15rem;
+}
+
+@media (max-width: 640px) {
+	.login-register-container {
+		margin: 6rem 1rem 1.5rem;
+		padding: 1rem;
+	}
+}

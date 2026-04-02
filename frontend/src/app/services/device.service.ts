@@ -28,4 +28,7 @@ export class DeviceService {
   delete(id: number): Observable<any> {
     return this.httpClient.delete(`${baseUrl}/${id}`);
   }
+  assignDevice(id: number, userId: number): Observable<Device> {
+    return this.httpClient.put<Device>(`${baseUrl}/${id}/assign/${userId}`, {});
+  }
 }

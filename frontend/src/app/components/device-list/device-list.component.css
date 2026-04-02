@@ -124,6 +124,16 @@
 }
 
 .btn-edit,
+.btn-assign {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
 .btn-delete {
   padding: 0.6rem 1rem;
   border: none;
@@ -266,16 +276,16 @@
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .device-main {
     width: 100%;
   }
-  
+
   .device-info-secondary {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .device-user {
     width: 100%;
   }

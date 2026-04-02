@@ -24,7 +24,7 @@ namespace DeviceManagement.service
 
         public async Task<Device> AddDeviceAsync(Device device)
         {
-            if(device.UserId.HasValue)
+            if (device.UserId.HasValue)
             {
                 var userExists = await _context.Users.AnyAsync(u => u.Id == device.UserId.Value);
                 if (!userExists)
@@ -32,7 +32,7 @@ namespace DeviceManagement.service
                     throw new ArgumentException($"User with ID {device.UserId.Value} does not exist.");
                 }
             }
-            if(_context.Devices.Any(d => d.Name == device.Name && d.Manufacturer == device.Manufacturer && device.UserId ==null))
+            if (_context.Devices.Any(d => d.Name == device.Name && d.Manufacturer == device.Manufacturer && device.UserId == null))
             {
                 throw new ArgumentException("A device with the same name and manufacturer already exists. Just assign it to a user!");
             }
@@ -43,7 +43,7 @@ namespace DeviceManagement.service
 
         public async Task<bool> UpdateDeviceAsync(Device device)
         {
-            if(!await _context.Devices.AnyAsync(dev => dev.Id == device.Id))
+            if (!await _context.Devices.AnyAsync(dev => dev.Id == device.Id))
             {
                 return false;
             }
@@ -56,7 +56,7 @@ namespace DeviceManagement.service
         public async Task<bool> DeleteDeviceAsync(int id)
         {
             var device = await _context.Devices.FindAsync(id);
-            if(device == null)
+            if (device == null)
             {
                 return false;
             }
@@ -64,6 +64,24 @@ namespace DeviceManagement.service
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<Device> AssignToUser(int id, int userId)
+        {
+            var device = await _context.Devices.FindAsync(id);
+            if (device == null)
+            {
+                return null;
+            }
 
+            var userExists = await _context.Users.AnyAsync(u => u.Id == userId);
+            if (!userExists)
+            {
+                return null;
+            }
+
+            device.UserId = userId;
+            _context.Update(device);
+            await _context.SaveChangesAsync();
+            return device;
+        }
     }
 }

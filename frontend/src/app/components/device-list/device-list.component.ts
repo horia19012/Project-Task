@@ -5,6 +5,7 @@ import { DeviceService } from '../../services/device.service';
 import { UserService } from '../../services/user.service';
 import { Device } from '../../models/device';
 import { User } from '../../models/user';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-device-list',
@@ -22,9 +23,10 @@ export class DeviceListComponent implements OnInit {
   constructor(
     private deviceService: DeviceService,
     private userService: UserService,
+    private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.editForm = this.createEditForm();
   }
@@ -35,32 +37,28 @@ export class DeviceListComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-
   getDevices(): void {
-    this.deviceService.getAll()
-      .subscribe({
-        next: (data) => {
-          console.log('Devices fetched:', data);
-          this.devices = data;
-          this.cdr.markForCheck();
-          
-          this.fetchUsersForDevices();
-        },
-        error: (err) => console.error(err)
-      });
+    this.deviceService.getAll().subscribe({
+      next: (data) => {
+        this.devices = data;
+        this.cdr.markForCheck();
+
+        this.fetchUsersForDevices();
+      },
+      error: (err) => console.error(err),
+    });
   }
 
   fetchUsersForDevices(): void {
-    this.devices.forEach(device => {
+    this.devices.forEach((device) => {
       if (device.userId) {
-        console.log(`Fetching user for device ${device.id} with userId ${device.userId}`);
         this.userService.getUser(device.userId).subscribe({
           next: (user: any) => {
             this.deviceUsers.set(device.userId!, user);
             this.cdr.markForCheck();
             this.cdr.detectChanges();
           },
-          error: (err) => console.error(`Error fetching user ${device.userId}:`, err)
+          error: (err) => console.error(`Error fetching user ${device.userId}:`, err),
         });
       }
     });
@@ -77,7 +75,7 @@ export class DeviceListComponent implements OnInit {
           console.log('Device deleted');
           this.getDevices();
         },
-        error: (err) => console.error('Error deleting device:', err)
+        error: (err) => console.error('Error deleting device:', err),
       });
     }
   }
@@ -92,7 +90,7 @@ export class DeviceListComponent implements OnInit {
       processor: ['', Validators.required],
       ram: ['', Validators.required],
       description: [''],
-      userId: [null]
+      userId: [null],
     });
   }
 
@@ -114,22 +112,33 @@ export class DeviceListComponent implements OnInit {
     if (this.editForm.valid && this.editingDeviceId) {
       const updatedDevice: Device = {
         ...this.editingDevice,
-        ...this.editForm.value
+        ...this.editForm.value,
       };
-      
+
       this.deviceService.update(this.editingDeviceId, updatedDevice).subscribe({
         next: () => {
           console.log('Device updated successfully');
           this.cancelEdit();
           this.getDevices();
         },
-        error: (err) => console.error('Error updating device:', err)
+        error: (err) => console.error('Error updating device:', err),
       });
     }
   }
 
-
   goToDetails(deviceId: number): void {
     this.router.navigate(['/devices', deviceId]);
+  }
+
+  assignDevice(deviceId: number): void {
+    this.deviceService
+      .assignDevice(deviceId, this.authService.getUserIdFromToken() || -1)
+      .subscribe({
+        next: () => {
+          console.log('Device assigned successfully');
+          this.getDevices();
+        },
+        error: (err) => console.error('Error assigning device:', err),
+      });
   }
 }

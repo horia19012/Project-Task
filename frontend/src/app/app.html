@@ -9,14 +9,12 @@
         <li *ngIf="isLoggedIn" class="nav-item">
           <a routerLink="devices/create" routerLinkActive="active" class="nav-link">Create Device</a>
         </li>
-        <li class="nav-item-right" *ngIf="isLoggedIn">
+        <li class="nav-actions" *ngIf="isLoggedIn">
           <button class="nav-profile-btn" (click)="toggleProfile()">
             <span class="profile-icon-nav">&#128100;</span> Profile
           </button>
-        </li>
-        <li class="nav-item-right" *ngIf="isLoggedIn">
-          <button class="nav-profile-btn" (click)="logOut()">
-            LogOut
+          <button class="nav-logout-btn" (click)="logOut()">
+            Logout
           </button>
         </li>
       </ul>

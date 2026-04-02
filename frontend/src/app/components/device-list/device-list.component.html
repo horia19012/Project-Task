@@ -21,7 +21,6 @@
           <div class="user-avatar">{{ user.name.charAt(0) }}</div>
           <div class="user-details">
             <p class="user-name">{{ user.name }}</p>
-            <p class="user-meta">{{ user.role }} • {{ user.location }}</p>
           </div>
         </div>
         <div class="user-info loading" *ngIf="!getUserForDevice(device) && device.userId">
@@ -34,6 +33,7 @@
       <div class="device-actions">
         <button class="btn-edit" (click)="startEdit(device); $event.stopPropagation()">Edit</button>
         <button class="btn-delete" (click)="deleteDevice(device.id!); $event.stopPropagation()">Delete</button>
+        <button class="btn-assign" (click)="assignDevice(device.id!); $event.stopPropagation()">Assign</button>
       </div>
     </div>
 

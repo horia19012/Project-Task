@@ -17,6 +17,7 @@ export class App {
   editName = '';
   editLocation = '';
   saving = false;
+  userId: number | null = null;
 
   constructor(
     private userService: UserService,

@@ -9,5 +9,6 @@ namespace DeviceManagement.service
         Task<Device> AddDeviceAsync(Device device);
         Task<bool> UpdateDeviceAsync(Device device);
         Task<bool> DeleteDeviceAsync(int id);
+        Task<Device> AssignToUser(int id, int userId);
     }    
 }
