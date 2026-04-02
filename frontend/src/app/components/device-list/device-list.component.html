@@ -3,7 +3,7 @@
     <p>No devices found</p>
   </div>
   
-  <div *ngFor="let device of devices" [class.editing]="editingDeviceId === device.id">
+  <div *ngFor="let device of devices" [class.editing]="editingDeviceId === device.id" (click)="editingDeviceId==null && device.id && goToDetails(device.id)" style="cursor: pointer;">
     <!-- Display Mode -->
     <div *ngIf="editingDeviceId !== device.id" class="device-item">
       <div class="device-main">
@@ -12,8 +12,6 @@
           <p class="device-specs">{{ device.manufacturer }} • {{ device.type }} • {{ device.operatingSystem }} {{ device.osVersion }}</p>
         </div>
         <div class="device-info-secondary">
-          <span class="spec"><strong>Processor:</strong> {{ device.processor }}</span>
-          <span class="spec"><strong>RAM:</strong> {{ device.ram }}</span>
           <span class="spec" *ngIf="device.description"><strong>Description:</strong> {{ device.description }}</span>
         </div>
       </div>
@@ -34,8 +32,8 @@
         </div>
       </div>
       <div class="device-actions">
-        <button class="btn-edit" (click)="startEdit(device)">Edit</button>
-        <button class="btn-delete" (click)="deleteDevice(device.id!)">Delete</button>
+        <button class="btn-edit" (click)="startEdit(device); $event.stopPropagation()">Edit</button>
+        <button class="btn-delete" (click)="deleteDevice(device.id!); $event.stopPropagation()">Delete</button>
       </div>
     </div>
 
@@ -75,6 +73,7 @@
           <label [for]="'ram-' + device.id">RAM</label>
           <input type="text" [id]="'ram-' + device.id" formControlName="ram" />
         </div>
+
         <div class="form-field">
           <label [for]="'userId-' + device.id">User ID</label>
           <input type="number" [id]="'userId-' + device.id" formControlName="userId" />
@@ -85,8 +84,8 @@
         <textarea [id]="'description-' + device.id" formControlName="description" rows="3"></textarea>
       </div>
       <div class="form-actions">
-        <button class="btn-save" (click)="saveEdit()" [disabled]="editForm.invalid">Save Changes</button>
-        <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+        <button class="btn-save" (click)="saveEdit(); $event.stopPropagation()" [disabled]="editForm.invalid">Save Changes</button>
+        <button class="btn-cancel" (click)="cancelEdit(); $event.stopPropagation()">Cancel</button>
       </div>
     </div>
   </div>

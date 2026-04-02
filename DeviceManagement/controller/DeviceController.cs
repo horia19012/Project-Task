@@ -38,9 +38,15 @@ namespace DeviceManagement.controller
         [HttpPost]
         public async Task<ActionResult> AddDevice([FromBody] Device device)
         {   
-            var addedDevice = await _service.AddDeviceAsync(device);
-            return Ok(addedDevice);
-            
+            try
+            {
+                var addedDevice = await _service.AddDeviceAsync(device);
+                return Ok(addedDevice);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]

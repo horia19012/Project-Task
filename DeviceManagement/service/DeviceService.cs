@@ -24,6 +24,18 @@ namespace DeviceManagement.service
 
         public async Task<Device> AddDeviceAsync(Device device)
         {
+            if(device.UserId.HasValue)
+            {
+                var userExists = await _context.Users.AnyAsync(u => u.Id == device.UserId.Value);
+                if (!userExists)
+                {
+                    throw new ArgumentException($"User with ID {device.UserId.Value} does not exist.");
+                }
+            }
+            if(_context.Devices.Any(d => d.Name == device.Name && d.Manufacturer == device.Manufacturer && device.UserId ==null))
+            {
+                throw new ArgumentException("A device with the same name and manufacturer already exists. Just assign it to a user!");
+            }
             _context.Devices.Add(device);
             await _context.SaveChangesAsync();
             return device;

@@ -61,7 +61,7 @@ export class DeviceCreateComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error creating device:', err);
-          alert('Error creating device. Check console for details.');
+          alert(err.error?.message || 'An error occurred while creating the device.');
           this.loading = false;
         },
         complete: () => {

@@ -128,6 +128,8 @@ export class DeviceListComponent implements OnInit {
     }
   }
 
-  updateDevice(id: number): void {}
-  
+
+  goToDetails(deviceId: number): void {
+    this.router.navigate(['/devices', deviceId]);
+  }
 }
