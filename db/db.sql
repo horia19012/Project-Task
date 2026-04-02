@@ -55,7 +55,7 @@ GO
 
 IF COL_LENGTH('users', 'password_hash') IS NULL
 BEGIN  
-    ALTER TABLE users
+    ALTER TABLE users 
     ADD password_hash NVARCHAR(255) NULL;
 END
 

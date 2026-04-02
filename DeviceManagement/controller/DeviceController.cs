@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DeviceManagement.controller
 {
-    
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class DeviceController : ControllerBase

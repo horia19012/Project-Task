@@ -68,7 +68,8 @@ export class LoginComponent {
       this.authService.login(loginRequest).subscribe({
         next: (response: any) => {
           console.log('Login successful:', response);
-          // localStorage.setItem('userId', response.id);
+          localStorage.setItem('token', response.token);
+          console.log('Token stored in localStorage:', localStorage.getItem('token'));
           this.router.navigate(['/devices']);
           
           alert('Login successful!');

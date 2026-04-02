@@ -9,6 +9,8 @@ const baseUrl = 'http://localhost:5249/api/device';
   providedIn: 'root',
 })
 export class DeviceService {
+
+  token : string | null = localStorage.getItem('token');
   constructor(private httpClient: HttpClient) {}
 
   getAll(): Observable<Device[]> {

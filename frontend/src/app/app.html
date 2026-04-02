@@ -3,15 +3,90 @@
     <div class="navbar-container">
       <a routerLink="" class="navbar-logo">DevManager</a>
       <ul class="navbar-nav">
-        <li class="nav-item">
+        <li *ngIf="isLoggedIn" class="nav-item">
           <a routerLink="devices" routerLinkActive="active" class="nav-link">Devices</a>
         </li>
-        <li class="nav-item">
+        <li *ngIf="isLoggedIn" class="nav-item">
           <a routerLink="devices/create" routerLinkActive="active" class="nav-link">Create Device</a>
+        </li>
+        <li class="nav-item-right" *ngIf="isLoggedIn">
+          <button class="nav-profile-btn" (click)="toggleProfile()">
+            <span class="profile-icon-nav">&#128100;</span> Profile
+          </button>
+        </li>
+        <li class="nav-item-right" *ngIf="isLoggedIn">
+          <button class="nav-profile-btn" (click)="logOut()">
+            LogOut
+          </button>
         </li>
       </ul>
     </div>
   </nav>
+
+  <div class="profile-overlay" *ngIf="profileOpen" (click)="closeProfile()"></div>
+
+  <div class="profile-panel" [class.open]="profileOpen">
+    <div class="profile-panel-header">
+      <h2>My Profile</h2>
+      <button class="profile-close-btn" (click)="closeProfile()">&#10005;</button>
+    </div>
+
+    <div *ngIf="profileData; else loadingTpl" class="profile-content">
+      <div class="profile-avatar">
+        <span>{{ profileData.name?.charAt(0)?.toUpperCase() }}</span>
+      </div>
+
+      <ng-container *ngIf="!editMode">
+        <div class="profile-field">
+          <label>Name</label>
+          <span>{{ profileData.name }}</span>
+        </div>
+        <div class="profile-field">
+          <label>Email</label>
+          <span>{{ profileData.email }}</span>
+        </div>
+        <div class="profile-field">
+          <label>Location</label>
+          <span>{{ profileData.location }}</span>
+        </div>
+        <div class="profile-field">
+          <label>Role</label>
+          <span class="role-badge">{{ profileData.role }}</span>
+        </div>
+        <button class="btn-edit-profile" (click)="startEdit()">Edit Profile</button>
+      </ng-container>
+
+      <ng-container *ngIf="editMode">
+        <div class="profile-field">
+          <label>Name</label>
+          <input [(ngModel)]="editName" class="profile-input" placeholder="Name" />
+        </div>
+        <div class="profile-field">
+          <label>Email</label>
+          <span>{{ profileData.email }}</span>
+        </div>
+        <div class="profile-field">
+          <label>Location</label>
+          <input [(ngModel)]="editLocation" class="profile-input" placeholder="Location" />
+        </div>
+        <div class="profile-field">
+          <label>Role</label>
+          <span class="role-badge">{{ profileData.role }}</span>
+        </div>
+        <div class="profile-actions">
+          <button class="btn-save-profile" (click)="saveProfile()" [disabled]="saving">
+            {{ saving ? 'Saving...' : 'Save' }}
+          </button>
+          <button class="btn-cancel-profile" (click)="cancelEdit()">Cancel</button>
+        </div>
+      </ng-container>
+    </div>
+
+    <ng-template #loadingTpl>
+      <div class="profile-loading">Loading profile...</div>
+    </ng-template>
+  </div>
+
   <div class="content">
     <router-outlet></router-outlet>
   </div>

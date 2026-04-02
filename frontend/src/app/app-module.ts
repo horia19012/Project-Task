@@ -4,12 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DeviceCreateComponent } from './components/device-create/device-create.component';
 import { DeviceListComponent } from './components/device-list/device-list.component';
 import { DeviceDetailsComponent } from './components/device-details/device-details.component';
 import { LoginComponent } from './components/login/login.component';
-
+import { AuthInterceptor } from './auth.interceptor';
 @NgModule({
   declarations: [
     App,
@@ -19,7 +19,9 @@ import { LoginComponent } from './components/login/login.component';
     LoginComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
-  providers: [provideBrowserGlobalErrorListeners()],
-  bootstrap: [App],
+   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
+  bootstrap: [App]
 })
 export class AppModule {}
