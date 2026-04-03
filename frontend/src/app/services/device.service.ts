@@ -9,6 +9,8 @@ const baseUrl = 'http://localhost:5249/api/device';
   providedIn: 'root',
 })
 export class DeviceService {
+
+  token : string | null = localStorage.getItem('token');
   constructor(private httpClient: HttpClient) {}
 
   getAll(): Observable<Device[]> {
@@ -25,5 +27,11 @@ export class DeviceService {
   }
   delete(id: number): Observable<any> {
     return this.httpClient.delete(`${baseUrl}/${id}`);
+  }
+  assignDevice(id: number, userId: number): Observable<Device> {
+    return this.httpClient.put<Device>(`${baseUrl}/${id}/assign/${userId}`, {});
+  }
+  unassignDevice(id: number): Observable<Device> {
+    return this.httpClient.put<Device>(`${baseUrl}/${id}/unassign`, {});
   }
 }

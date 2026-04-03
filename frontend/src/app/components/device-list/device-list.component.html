@@ -2,38 +2,62 @@
   <div *ngIf="devices.length === 0" class="no-devices">
     <p>No devices found</p>
   </div>
-  
-  <div *ngFor="let device of devices" [class.editing]="editingDeviceId === device.id" (click)="editingDeviceId==null && device.id && goToDetails(device.id)" style="cursor: pointer;">
+
+  <div
+    *ngFor="let device of devices"
+    [class.editing]="editingDeviceId === device.id"
+    (click)="editingDeviceId == null && device.id && goToDetails(device.id)"
+    style="cursor: pointer"
+  >
     <!-- Display Mode -->
     <div *ngIf="editingDeviceId !== device.id" class="device-item">
       <div class="device-main">
         <div class="device-info-primary">
           <h3 class="device-name">{{ device.name }}</h3>
-          <p class="device-specs">{{ device.manufacturer }} • {{ device.type }} • {{ device.operatingSystem }} {{ device.osVersion }}</p>
+          <p class="device-specs">
+            {{ device.manufacturer }} • {{ device.type }} • {{ device.operatingSystem }}
+            {{ device.osVersion }}
+          </p>
         </div>
         <div class="device-info-secondary">
-          <span class="spec" *ngIf="device.description"><strong>Description:</strong> {{ device.description }}</span>
+          <span class="spec" *ngIf="device.description"
+            ><strong>Description:</strong> {{ device.description }}</span
+          >
         </div>
       </div>
-      
+
       <div class="device-user">
         <div class="user-info" *ngIf="getUserForDevice(device) as user">
           <div class="user-avatar">{{ user.name.charAt(0) }}</div>
           <div class="user-details">
             <p class="user-name">{{ user.name }}</p>
-            <p class="user-meta">{{ user.role }} • {{ user.location }}</p>
           </div>
         </div>
         <div class="user-info loading" *ngIf="!getUserForDevice(device) && device.userId">
           <p>Loading user information...</p>
         </div>
+        <button
+          *ngIf="device.userId"
+          class="btn-unassign"
+          (click)="unassignDevice(device.id!); $event.stopPropagation()"
+        >
+          Unassign
+        </button>
         <div class="user-info no-user" *ngIf="!device.userId">
-          <p>No user assigned</p>
+          <button
+            *ngIf="!device.userId"
+            class="btn-assign"
+            (click)="assignDevice(device.id!); $event.stopPropagation()"
+          >
+            Assign
+          </button>
         </div>
       </div>
       <div class="device-actions">
         <button class="btn-edit" (click)="startEdit(device); $event.stopPropagation()">Edit</button>
-        <button class="btn-delete" (click)="deleteDevice(device.id!); $event.stopPropagation()">Delete</button>
+        <button class="btn-delete" (click)="deleteDevice(device.id!); $event.stopPropagation()">
+          Delete
+        </button>
       </div>
     </div>
 
@@ -81,10 +105,20 @@
       </div>
       <div class="form-field">
         <label [for]="'description-' + device.id">Description</label>
-        <textarea [id]="'description-' + device.id" formControlName="description" rows="3"></textarea>
+        <textarea
+          [id]="'description-' + device.id"
+          formControlName="description"
+          rows="3"
+        ></textarea>
       </div>
       <div class="form-actions">
-        <button class="btn-save" (click)="saveEdit(); $event.stopPropagation()" [disabled]="editForm.invalid">Save Changes</button>
+        <button
+          class="btn-save"
+          (click)="saveEdit(); $event.stopPropagation()"
+          [disabled]="editForm.invalid"
+        >
+          Save Changes
+        </button>
         <button class="btn-cancel" (click)="cancelEdit(); $event.stopPropagation()">Cancel</button>
       </div>
     </div>

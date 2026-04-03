@@ -44,3 +44,18 @@ BEGIN
     FOREIGN KEY (userId) REFERENCES users(id);
 END
 GO
+
+
+IF COL_LENGTH('users', 'email') IS NULL
+BEGIN
+    ALTER TABLE users
+    ADD email NVARCHAR(255) NULL;
+END
+GO
+
+IF COL_LENGTH('users', 'password_hash') IS NULL
+BEGIN  
+    ALTER TABLE users 
+    ADD password_hash NVARCHAR(255) NULL;
+END
+

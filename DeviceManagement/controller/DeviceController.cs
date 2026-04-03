@@ -3,10 +3,12 @@ using DeviceManagement.Config;
 using DeviceManagement.model;
 using DeviceManagement.service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Reflection.Metadata.Ecma335;
 
 namespace DeviceManagement.controller
 {
-    
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class DeviceController : ControllerBase
@@ -21,11 +23,11 @@ namespace DeviceManagement.controller
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetDevice(int id)
-        {   
+        {
             var device = await _service.GetDeviceByIdAsync(id);
             if (device == null) return NotFound();
             return Ok(device);
-            
+
         }
 
         [HttpGet()]
@@ -37,7 +39,7 @@ namespace DeviceManagement.controller
 
         [HttpPost]
         public async Task<ActionResult> AddDevice([FromBody] Device device)
-        {   
+        {
             try
             {
                 var addedDevice = await _service.AddDeviceAsync(device);
@@ -56,20 +58,42 @@ namespace DeviceManagement.controller
 
             var updatedDevice = await _service.UpdateDeviceAsync(device);
 
-            if(!updatedDevice) return NotFound();
+            if (!updatedDevice) return NotFound();
 
             return Ok(updatedDevice);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>>  DeleteDevice(int id)
+        public async Task<ActionResult<bool>> DeleteDevice(int id)
         {
             var deleted = await _service.DeleteDeviceAsync(id);
             if (!deleted) return NotFound();
             return NoContent();
         }
 
-        
+        [HttpPut("{id}/assign/{userId}")]
+        public async Task<ActionResult> AssignToUser(int id, int userId)
+        {
+            var updatedDevice = await _service.AssignToUser(id, userId);
+            if (updatedDevice == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedDevice);
+        }
+
+        [HttpPut("{id}/unassign")]
+        public async Task<ActionResult> UnassignFromUser(int id)
+        {
+            var updatedDevice = await _service.UnassignFromUser(id);
+            if (updatedDevice == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedDevice);
+        }
+
+
 
 
     }
