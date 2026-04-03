@@ -15,10 +15,12 @@ namespace DeviceManagement.controller
     {
 
         private readonly IDeviceService _service;
+        private readonly IGroqService _groqService;
 
-        public DeviceController(IDeviceService service)
+        public DeviceController(IDeviceService service, IGroqService groqService)
         {
             _service = service;
+            _groqService = groqService;
         }
 
         [HttpGet("{id}")]
@@ -93,8 +95,31 @@ namespace DeviceManagement.controller
             return Ok(updatedDevice);
         }
 
+        [HttpPost("create_description")]
+        public async Task<ActionResult> CreateDescription([FromBody] Device device, CancellationToken cancellationToken)
+        {
+            if (device is null)
+            {
+                return BadRequest(new { message = "Device is required." });
+            }
 
-
-
+            var prompt = $"Create a concise and informative description for the following device:\n\n" +
+                        $"Name: {device.Name}\n" +
+                        $"Type: {device.Type}\n" +
+                        $"Manufacturer: {device.Manufacturer}\n" +
+                        $"Operating System: {device.OperatingSystem}\n" +
+                        $"RAM: {device.Ram} GB\n" +
+                        $"Processor: {device.Processor}\n" +
+                        $"The description should highlight the key features and specifications of the device.";
+            try
+            {
+                var answer = await _groqService.SendPromptAsync(prompt, cancellationToken);
+                return Ok(new { content = answer });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status502BadGateway, new { message = "Groq call failed.", detail = ex.Message });
+            }
+        }
     }
 }

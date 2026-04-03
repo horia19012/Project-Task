@@ -34,4 +34,7 @@ export class DeviceService {
   unassignDevice(id: number): Observable<Device> {
     return this.httpClient.put<Device>(`${baseUrl}/${id}/unassign`, {});
   }
+  createDescription(data: Device): Observable<any> {
+    return this.httpClient.post<any>(`${baseUrl}/create_description`, data);
+  }
 }
