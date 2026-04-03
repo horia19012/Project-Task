@@ -106,6 +106,7 @@
         <textarea 
           id="description" 
           formControlName="description" 
+          (focus)="onDescriptionFocus($event)"
           placeholder="Enter device description"
           rows="4"
         ></textarea>

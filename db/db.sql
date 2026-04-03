@@ -58,4 +58,12 @@ BEGIN
     ALTER TABLE users 
     ADD password_hash NVARCHAR(255) NULL;
 END
+GO
+
+IF COL_LENGTH('devices', 'description') IS NOT NULL
+BEGIN
+    ALTER TABLE devices
+    ALTER COLUMN description NVARCHAR(3000) NOT NULL;
+END
+GO
 
