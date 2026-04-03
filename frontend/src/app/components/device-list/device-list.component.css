@@ -74,6 +74,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .user-avatar {
@@ -132,6 +133,31 @@
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.btn-unassign {
+  padding: 0.5rem 0.95rem;
+  border: 1px solid #ef9a6a;
+  color: #a3480f;
+  background: linear-gradient(135deg, #ffe2cf 0%, #ffd4b8 100%);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-unassign:hover {
+  background: linear-gradient(135deg, #ffcfad 0%, #ffbc8f 100%);
+  color: #7f3308;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(216, 128, 64, 0.25);
+}
+
+.btn-unassign:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(216, 128, 64, 0.2);
 }
 
 .btn-delete {

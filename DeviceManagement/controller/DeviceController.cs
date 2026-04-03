@@ -63,6 +63,14 @@ namespace DeviceManagement.controller
             return Ok(updatedDevice);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> DeleteDevice(int id)
+        {
+            var deleted = await _service.DeleteDeviceAsync(id);
+            if (!deleted) return NotFound();
+            return NoContent();
+        }
+
         [HttpPut("{id}/assign/{userId}")]
         public async Task<ActionResult> AssignToUser(int id, int userId)
         {
@@ -74,12 +82,15 @@ namespace DeviceManagement.controller
             return Ok(updatedDevice);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> DeleteDevice(int id)
+        [HttpPut("{id}/unassign")]
+        public async Task<ActionResult> UnassignFromUser(int id)
         {
-            var deleted = await _service.DeleteDeviceAsync(id);
-            if (!deleted) return NotFound();
-            return NoContent();
+            var updatedDevice = await _service.UnassignFromUser(id);
+            if (updatedDevice == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedDevice);
         }
 
 

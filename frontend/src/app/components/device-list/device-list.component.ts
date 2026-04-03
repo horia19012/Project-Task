@@ -141,4 +141,19 @@ export class DeviceListComponent implements OnInit {
         error: (err) => console.error('Error assigning device:', err),
       });
   }
+
+  unassignDevice(deviceId: number): void {
+    if(this.getUserForDevice(this.devices.find(d => d.id === deviceId)!)?.id !== this.authService.getUserIdFromToken()) {
+      alert('You can only unassign devices assigned to you.');
+      return;
+    }else{
+      this.deviceService.unassignDevice(deviceId).subscribe({
+        next: () => {
+          this.getDevices();
+          console.log('Device unassigned successfully'); 
+        },
+        error: (err) => console.error('Error unassigning device:', err),
+      });
+    }
+  }
 }

@@ -10,5 +10,6 @@ namespace DeviceManagement.service
         Task<bool> UpdateDeviceAsync(Device device);
         Task<bool> DeleteDeviceAsync(int id);
         Task<Device> AssignToUser(int id, int userId);
+        Task<Device> UnassignFromUser(int id);
     }    
 }

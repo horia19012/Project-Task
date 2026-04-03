@@ -31,4 +31,7 @@ export class DeviceService {
   assignDevice(id: number, userId: number): Observable<Device> {
     return this.httpClient.put<Device>(`${baseUrl}/${id}/assign/${userId}`, {});
   }
+  unassignDevice(id: number): Observable<Device> {
+    return this.httpClient.put<Device>(`${baseUrl}/${id}/unassign`, {});
+  }
 }

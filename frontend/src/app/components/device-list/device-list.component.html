@@ -36,6 +36,13 @@
         <div class="user-info loading" *ngIf="!getUserForDevice(device) && device.userId">
           <p>Loading user information...</p>
         </div>
+        <button
+          *ngIf="device.userId"
+          class="btn-unassign"
+          (click)="unassignDevice(device.id!); $event.stopPropagation()"
+        >
+          Unassign
+        </button>
         <div class="user-info no-user" *ngIf="!device.userId">
           <button
             *ngIf="!device.userId"

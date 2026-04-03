@@ -83,5 +83,19 @@ namespace DeviceManagement.service
             await _context.SaveChangesAsync();
             return device;
         }
+
+        public async Task<Device> UnassignFromUser(int id)
+        {
+            var device = await _context.Devices.FindAsync(id);
+            if (device == null)
+            {
+                return null;
+            }
+
+            device.UserId = null;
+            _context.Update(device);
+            await _context.SaveChangesAsync();
+            return device;
+        }
     }
 }
