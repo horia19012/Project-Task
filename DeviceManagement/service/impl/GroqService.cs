@@ -18,6 +18,12 @@ namespace DeviceManagement.service
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Sends a request to the API and retrieves the response based on the provided prompt
+        /// </summary>
+        /// <param name="prompt">User input</param>
+        /// <param name="cancellationToken">Token used to cancel the request</param>
+        /// <returns>API response</returns>
         public async Task<string> SendPromptAsync(string prompt, CancellationToken cancellationToken = default)
         {
             var apiKey = _configuration["GROQ_API_KEY"];

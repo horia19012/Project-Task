@@ -81,7 +81,7 @@ namespace DeviceManagement.controller
             var user = new User
             {
                 Name = request.Name,
-                Role = Role.user,
+                Role = Role.USER,
                 Location = request.Location,
                 Email = request.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password)

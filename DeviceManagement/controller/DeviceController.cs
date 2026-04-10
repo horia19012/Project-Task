@@ -23,6 +23,11 @@ namespace DeviceManagement.controller
             _groqService = groqService;
         }
 
+        /// <summary>
+        /// Retrieves a device by its ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult> GetDevice(int id)
         {
@@ -32,6 +37,10 @@ namespace DeviceManagement.controller
 
         }
 
+        /// <summary>
+        /// Retrieves all devices.
+        /// </summary>
+        /// <returns>A list of all devices</returns>
         [HttpGet()]
         public async Task<ActionResult> GetAllDevices()
         {
@@ -39,6 +48,10 @@ namespace DeviceManagement.controller
             return Ok(devices);
         }
 
+        /// <summary>
+        /// Retrieves all devices assigned to the currently authenticated user.
+        /// </summary>
+        /// <returns>A list of devices assigned to the authenticated user</returns>
         [HttpGet("mine")]
         public async Task<ActionResult> GetMyDevices()
         {
@@ -52,6 +65,11 @@ namespace DeviceManagement.controller
             return Ok(devices);
         }
 
+        /// <summary>
+        /// Adds a new device.
+        /// </summary>
+        /// <param name="device">The device to add</param>
+        /// <returns>The added device</returns>
         [HttpPost]
         public async Task<ActionResult> AddDevice([FromBody] Device device)
         {
@@ -66,6 +84,12 @@ namespace DeviceManagement.controller
             }
         }
 
+        /// <summary>
+        /// Updates an existing device.
+        /// </summary>
+        /// <param name="id">The ID of the device to update</param>
+        /// <param name="device">The updated device information</param>
+        /// <returns>The updated device</returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateDevice(int id, [FromBody] Device device)
         {
@@ -78,6 +102,11 @@ namespace DeviceManagement.controller
             return Ok(updatedDevice);
         }
 
+        /// <summary>
+        /// Deletes a device by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the device to delete</param>
+        /// <returns>True if the device was deleted, otherwise false</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteDevice(int id)
         {
@@ -85,6 +114,13 @@ namespace DeviceManagement.controller
             if (!deleted) return NotFound();
             return NoContent();
         }
+
+        /// <summary>
+        /// Assigns a device to a user.
+        /// </summary>
+        /// <param name="id">The ID of the device to assign</param>
+        /// <param name="userId">The ID of the user to assign the device to</param>
+        /// <returns>The updated device</returns>
 
         [HttpPut("{id}/assign/{userId}")]
         public async Task<ActionResult> AssignToUser(int id, int userId)
@@ -97,6 +133,11 @@ namespace DeviceManagement.controller
             return Ok(updatedDevice);
         }
 
+        /// <summary>
+        /// Unassigns a device from a user by setting the UserId property of the device to null.
+        /// </summary>
+        /// <param name="id">The ID of the device to unassign</param>
+        /// <returns>The updated device</returns>
         [HttpPut("{id}/unassign")]
         public async Task<ActionResult> UnassignFromUser(int id)
         {
@@ -107,6 +148,13 @@ namespace DeviceManagement.controller
             }
             return Ok(updatedDevice);
         }
+
+        /// <summary>
+        /// Creates a description for a device using the Groq service
+        /// </summary>
+        /// <param name="device">The device for which to create a description</param>
+        /// <param name="cancellationToken">A cancellation token</param>
+        /// <returns>The generated description</returns>
 
         [HttpPost("create_description")]
         public async Task<ActionResult> CreateDescription([FromBody] Device device, CancellationToken cancellationToken)
