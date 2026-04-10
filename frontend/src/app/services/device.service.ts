@@ -16,6 +16,9 @@ export class DeviceService {
   getAll(): Observable<Device[]> {
     return this.httpClient.get<Device[]>(baseUrl);
   }
+  getMine(): Observable<Device[]> {
+    return this.httpClient.get<Device[]>(`${baseUrl}/mine`);
+  }
   getDevice(id: number): Observable<Device> {
     return this.httpClient.get<Device>(`${baseUrl}/${id}`);
   }

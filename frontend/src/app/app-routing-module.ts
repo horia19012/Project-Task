@@ -8,6 +8,7 @@ import { authGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: 'devices/create', component: DeviceCreateComponent, canActivate: [authGuard] },
+  { path: 'devices/my', component: DeviceListComponent, canActivate: [authGuard], data: { myDevicesOnly: true } },
   { path: 'devices/:id', component: DeviceDetailsComponent, canActivate: [authGuard] },
   { path: 'devices', component: DeviceListComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },

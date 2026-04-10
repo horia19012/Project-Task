@@ -4,7 +4,7 @@ using DeviceManagement.model;
 using DeviceManagement.service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using System.Reflection.Metadata.Ecma335;
+using System.Security.Claims;
 
 namespace DeviceManagement.controller
 {
@@ -36,6 +36,19 @@ namespace DeviceManagement.controller
         public async Task<ActionResult> GetAllDevices()
         {
             var devices = await _service.GetAllDevicesAsync();
+            return Ok(devices);
+        }
+
+        [HttpGet("mine")]
+        public async Task<ActionResult> GetMyDevices()
+        {
+            var userIdValue = User.FindFirstValue("sub") ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdValue, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            var devices = await _service.GetDevicesByUserIdAsync(userId);
             return Ok(devices);
         }
 

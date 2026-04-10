@@ -7,6 +7,9 @@
           <a routerLink="devices" routerLinkActive="active" class="nav-link">Devices</a>
         </li>
         <li *ngIf="isLoggedIn" class="nav-item">
+          <a routerLink="devices/my" routerLinkActive="active" class="nav-link">My Devices</a>
+        </li>
+        <li *ngIf="isLoggedIn" class="nav-item">
           <a routerLink="devices/create" routerLinkActive="active" class="nav-link">Create Device</a>
         </li>
         <li class="nav-actions" *ngIf="isLoggedIn">

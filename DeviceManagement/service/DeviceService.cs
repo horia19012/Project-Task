@@ -17,6 +17,13 @@ namespace DeviceManagement.service
             return await _context.Devices.ToListAsync();
         }
 
+        public async Task<IEnumerable<Device>> GetDevicesByUserIdAsync(int userId)
+        {
+            return await _context.Devices
+                .Where(device => device.UserId == userId)
+                .ToListAsync();
+        }
+
         public async Task<Device> GetDeviceByIdAsync(int id)
         {
             return await _context.Devices.FindAsync(id);
