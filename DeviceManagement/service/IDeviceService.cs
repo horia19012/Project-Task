@@ -5,6 +5,7 @@ namespace DeviceManagement.service
     public interface IDeviceService
     {
         Task<IEnumerable<Device>> GetAllDevicesAsync();
+        Task<IEnumerable<Device>> GetDevicesByUserIdAsync(int userId);
         Task<Device> GetDeviceByIdAsync(int id);
         Task<Device> AddDeviceAsync(Device device);
         Task<bool> UpdateDeviceAsync(Device device);

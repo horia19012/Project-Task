@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DeviceService } from '../../services/device.service';
@@ -19,8 +20,11 @@ export class DeviceListComponent implements OnInit {
   editingDeviceId: number | null = null;
   editForm: FormGroup;
   editingDevice: Device | null = null;
+  myDevicesOnly = false;
+  pageTitle = 'All Devices';
 
   constructor(
+    private route: ActivatedRoute,
     private deviceService: DeviceService,
     private userService: UserService,
     private authService: AuthService,
@@ -32,15 +36,23 @@ export class DeviceListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('DeviceListComponent initialized');
-    this.getDevices();
-    this.cdr.detectChanges();
+    this.route.data.subscribe((data) => {
+      this.myDevicesOnly = !!data['myDevicesOnly'];
+      this.pageTitle = this.myDevicesOnly ? 'My Devices' : 'All Devices';
+      this.getDevices();
+      this.cdr.detectChanges();
+    });
   }
 
   getDevices(): void {
-    this.deviceService.getAll().subscribe({
+    const request = this.myDevicesOnly
+      ? this.deviceService.getMine()
+      : this.deviceService.getAll();
+
+    request.subscribe({
       next: (data) => {
         this.devices = data;
+        this.deviceUsers.clear();
         this.cdr.markForCheck();
 
         this.fetchUsersForDevices();
@@ -131,6 +143,10 @@ export class DeviceListComponent implements OnInit {
   }
 
   assignDevice(deviceId: number): void {
+    if (this.myDevicesOnly) {
+      return;
+    }
+
     this.deviceService
       .assignDevice(deviceId, this.authService.getUserIdFromToken() || -1)
       .subscribe({
