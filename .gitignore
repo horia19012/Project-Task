@@ -1,4 +1,6 @@
 **/bin/
 **/obj/
 .fake
+/.env
+/frontend/.env
 /DeviceManagement/.env
