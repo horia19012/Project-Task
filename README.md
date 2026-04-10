@@ -11,10 +11,10 @@ After cloning the repository, create a `.env` file in the root folder, it must h
 MSSQL_SA_PASSWORD=YourUserPassword123!
 GROQ_API_KEY=your_groq_api_key
 
-###Run the project
+##Run the project
 docker compose up --build
 
-###Stop the project
+##Stop the project
 docker compose down
 
 ##Notes
