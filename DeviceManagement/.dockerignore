@@ -1,0 +1,8 @@
+bin
+obj
+publish-test
+.vs
+.git
+.gitignore
+.env
+Dockerfile*
